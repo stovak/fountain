@@ -38,6 +38,15 @@ class FountainParser
     protected FountainElementCollection $_elements;
 
     /**
+     * FountainParser constructor.
+     */
+    public function __construct()
+    {
+        $this->_elements = new FountainElementCollection();
+    }
+
+
+    /**
      * Parse a string into a collection of elements.
      *
      * @param string $contents Fountain formatted text

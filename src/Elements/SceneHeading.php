@@ -32,10 +32,10 @@ class SceneHeading extends AbstractElement
             $line = preg_replace('/#.*#/i', '', $text);
             $anchor = preg_replace('/#/i', '', $numbering[0]);
 
-            return '<h3 class="'.$className.'" id="'.$anchor.'">'.$line.'</h3>';
+            return '<scene-heading class="'.$className.'" id="'.$anchor.'">'.$line.'</scene-heading>';
         }
 
-        return '<h3 class="'.$className.'">'.trim($text).'</h3>';
+        return '<scene-heading class="'.$className.'">'.trim($text).'</scene-heading>';
     }
 
     /**
