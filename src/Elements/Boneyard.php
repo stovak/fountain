@@ -8,7 +8,8 @@ class Boneyard extends AbstractElement
 {
     public const REGEX = "/(^\/\*)|(\*\/\s*$)/";
 
-    public function sanitize($line) {
+    public function sanitize($line)
+    {
         return str_replace(array('/*', '*/'), '', $line);
     }
 

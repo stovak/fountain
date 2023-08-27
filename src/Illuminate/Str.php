@@ -13,7 +13,7 @@ class Str
      *
      * @var array
      */
-    protected static $snakeCache = [];
+    protected static array $snakeCache = [];
 
     /**
      * Convert the given string to lower-case.
@@ -21,7 +21,7 @@ class Str
      * @param  string  $value
      * @return string
      */
-    public static function lower($value)
+    public static function lower($value): string
     {
         return mb_strtolower($value, 'UTF-8');
     }
@@ -33,7 +33,7 @@ class Str
      * @param  string  $delimiter
      * @return string
      */
-    public static function snake($value, $delimiter = '_')
+    public static function snake($value, $delimiter = '_'): string
     {
         $key = $value;
 
@@ -56,7 +56,7 @@ class Str
      * @param  string  $value
      * @return string
      */
-    public static function kebab($value)
+    public static function kebab($value): string
     {
         return static::snake($value, '-');
     }

@@ -13,8 +13,14 @@ use Fountain\Illuminate\Str;
  */
 class SceneHeading extends AbstractElement
 {
+    /**
+     *
+     */
     public const REGEX = '/^(INT|EXT|EST|I\\/??E)[\\.\\-\\s]/i';
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $text = $this->getText();
@@ -32,12 +38,20 @@ class SceneHeading extends AbstractElement
         return '<h3 class="'.$className.'">'.trim($text).'</h3>';
     }
 
-    public function forcedHeading($line)
+    /**
+     * @param $line
+     * @return false|int
+     */
+    public function forcedHeading($line): false|int
     {
         return preg_match('/^\\.[^.]/', $line);
     }
 
-    public function match($line)
+    /**
+     * @param $line
+     * @return bool
+     */
+    public function match($line): bool
     {
         $forced_scene_heading = $this->forcedHeading($line);
 
@@ -49,7 +63,11 @@ class SceneHeading extends AbstractElement
         return $forced_scene_heading || $scene_heading;
     }
 
-    public function sanitize($line)
+    /**
+     * @param $line
+     * @return string
+     */
+    public function sanitize($line): string
     {
         // remove the prefix
         if ($this->forcedHeading($line)) {

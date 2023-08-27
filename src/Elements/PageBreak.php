@@ -12,8 +12,9 @@ class PageBreak extends AbstractElement
 {
     public const REGEX = "/^(-{3,})|(={3,})\s*$/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, $line);
+    public function match($line)
+    {
+        return preg_match(self::REGEX, $line);
     }
 
     public function sanitize($line)

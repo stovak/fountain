@@ -8,8 +8,11 @@ class NewLine extends AbstractElement
 {
     public const REGEX = "/^\s*$/";
 
-    public function match($line) {
-        if ($line === "") return true;
+    public function match($line)
+    {
+        if ($line === "") {
+            return true;
+        }
         return preg_match(self::REGEX, $line);
     }
 

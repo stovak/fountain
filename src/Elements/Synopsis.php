@@ -20,11 +20,12 @@ class Synopsis extends AbstractElement
 
     public const REGEX = "/^=\s/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, trim($line));
+    public function match($line)
+    {
+        return preg_match(self::REGEX, trim($line));
     }
 
-    function sanitize($line)
+    public function sanitize($line)
     {
         preg_match("/^\s*={1}(.*)/", $line, $matches);
         return trim($matches[1]);

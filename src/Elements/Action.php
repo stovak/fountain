@@ -18,11 +18,12 @@ class Action extends AbstractElement
 
     public const REGEX = "/^!/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, trim($line));
+    public function match($line)
+    {
+        return preg_match(self::REGEX, trim($line));
     }
 
-    function sanitize($line)
+    public function sanitize($line)
     {
         // Find and return the text of the action without !
         preg_match("/^\s*!{1}(.*)/", $line, $matches);

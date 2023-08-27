@@ -15,8 +15,9 @@ class Parenthetical extends AbstractElement
 {
     public const REGEX = "/^\s*\(/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, trim($line));
+    public function match($line)
+    {
+        return preg_match(self::REGEX, trim($line));
     }
 
     public function sanitize($line)

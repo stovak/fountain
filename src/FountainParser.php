@@ -35,7 +35,7 @@ class FountainParser
      *
      * @var FountainElementCollection
      */
-    protected $_elements;
+    protected FountainElementCollection $_elements;
 
     /**
      * Parse a string into a collection of elements.
@@ -44,7 +44,7 @@ class FountainParser
      *
      * @return FountainElementCollection
      */
-    public function parse(string $contents)
+    public function parse(string $contents): FountainElementCollection
     {
         //-----------------------------------------------------
         // Prepare the file contents
@@ -456,7 +456,7 @@ class FountainParser
      *
      * @param $element AbstractElement
      */
-    public function add_element(AbstractElement $element)
+    public function add_element(AbstractElement $element): void
     {
         $this->elements()->create_and_add_element($element);
     }
@@ -466,7 +466,7 @@ class FountainParser
      *
      * @return false|mixed
      */
-    private function last_element()
+    private function last_element(): mixed
     {
         $last_element = &$this->elements()->last_element();
 
@@ -478,7 +478,7 @@ class FountainParser
      *
      * @return bool
      */
-    private function last_element_newline()
+    private function last_element_newline(): bool
     {
         $last_element = $this->last_element();
 

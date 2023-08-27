@@ -16,7 +16,8 @@ class Transition extends AbstractElement
         'MATCH CUT TO:'
     );
 
-    public function match($line) {
+    public function match($line)
+    {
         if (in_array(trim($line), $this->transitions)) {
             return true;
         }

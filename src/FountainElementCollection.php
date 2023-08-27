@@ -97,7 +97,7 @@ class FountainElementCollection
             $string .= (string) $element."\n";
         }
 
-        return $string;
+        return "<screenplay>" . $string . "</screenplay>";
     }
 
 }

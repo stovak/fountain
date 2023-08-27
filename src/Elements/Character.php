@@ -15,8 +15,9 @@ class Character extends AbstractElement
 
     public const REGEX = "/^((\s*)[A-Z@]((([^a-z`]+)(\s?\(.*\))?))|(@.+))$/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, $line);
+    public function match($line)
+    {
+        return preg_match(self::REGEX, $line);
     }
 
     public function sanitize($line)
@@ -37,6 +38,6 @@ class Character extends AbstractElement
             $character .= " (DUAL)";
         }
 
-        return "<h4 class='character'>{$character}</h4>";
+        return "<character>{$character}</character>";
     }
 }

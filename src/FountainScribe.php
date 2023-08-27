@@ -8,7 +8,7 @@ class FountainScribe
      * Inline Notes
      * Process all inline notes in a line
      */
-    function parseInlineNotes($line)
+    public function parseInlineNotes($line)
     {
         // inline notes
         while (preg_match("/(\[\[.*?\]\])/", $line)) {
@@ -21,7 +21,7 @@ class FountainScribe
     /**
      * Inline Notes
      */
-    function handleInlineNotes($line)
+    public function handleInlineNotes($line)
     {
         // get the parts before and after [[note]] in the line of text
         list($before, $text) = preg_split("/\[\[/", $line, 2);
@@ -36,7 +36,7 @@ class FountainScribe
      * Underline Text
      * Process all underlined text in a line
      */
-    function parseUnderlines($line)
+    public function parseUnderlines($line)
     {
         // inline notes
         while (preg_match("/(_.*?_)/", $line)) {
@@ -49,7 +49,7 @@ class FountainScribe
     /**
      * Inline Underlines
      */
-    function handleInlineUnderline($line)
+    public function handleInlineUnderline($line)
     {
         // get the parts before and after _underline_ in the line of text
         list($before, $text) = preg_split("/_/", $line, 2);
@@ -98,7 +98,7 @@ class FountainScribe
     /**
      * Inline Bold
      */
-    function handleBoldEmphasis($line)
+    public function handleBoldEmphasis($line)
     {
         // get the parts before and after **bold** in the line of text
         list($before, $text) = preg_split("/\*\*/", $line, 2);
@@ -112,7 +112,7 @@ class FountainScribe
     /**
      * Inline Italic
      */
-    function handleItalicEmphasis($line)
+    public function handleItalicEmphasis($line)
     {
         // get the parts before and after *italics* in the line of text
         list($before, $text) = preg_split("/\*/", $line, 2);

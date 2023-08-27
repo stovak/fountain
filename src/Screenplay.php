@@ -2,13 +2,16 @@
 
 namespace Fountain;
 
+/**
+ *
+ */
 class Screenplay
 {
     /**
      * FountainParser
      * @var $elements
      */
-    protected $elements;
+    protected FountainParser $elements;
 
     /**
      * FountainTags

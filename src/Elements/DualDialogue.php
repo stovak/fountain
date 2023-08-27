@@ -13,7 +13,8 @@ class DualDialogue extends AbstractElement
 {
     public const REGEX = "/\^\s*$/";
 
-    public function match($line) {
+    public function match($line)
+    {
         return preg_match(self::REGEX, $line);
     }
 

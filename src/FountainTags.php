@@ -9,12 +9,7 @@ class FountainTags
     /**
      * @var FountainScribe
      */
-    protected $scribe;
-
-    /**
-     * Html container
-     */
-    private $html;
+    protected FountainScribe $scribe;
 
     /**
      * FountainScribe constructor.
@@ -33,7 +28,7 @@ class FountainTags
     public function parse(FountainElementCollection $elements)
     {
         // create a new content holder
-        $this->html = '';
+        $html = '';
 
         // get a list of elements to process
         $elementTypes = (new FountainType())->provideRoles();
@@ -56,14 +51,14 @@ class FountainTags
                     }
 
                     // render element as HTML
-                    $this->html .= ($key === 0 ? '' : PHP_EOL);
-                    $this->html .= $markdown;
+                    $html .= ($key === 0 ? '' : PHP_EOL);
+                    $html .= $markdown;
                     continue 2; // break outer loop
                 }
             }
         }
 
         // default return without padding
-        return '<article class="fountain">'.PHP_EOL.$this->html.PHP_EOL.'</article>';
+        return '<article class="fountain">'.PHP_EOL. $html .PHP_EOL.'</article>';
     }
 }

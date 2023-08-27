@@ -12,8 +12,9 @@ class Lyrics extends AbstractElement
 {
     public const REGEX = "/^(\s+)?~.*/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, $line);
+    public function match($line)
+    {
+        return preg_match(self::REGEX, $line);
     }
 
     public function sanitize($line)

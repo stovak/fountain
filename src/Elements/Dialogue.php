@@ -17,7 +17,7 @@ class Dialogue extends AbstractElement
         return $line;
     }
 
-    public function sanitize($line)
+    public function sanitize($line): string
     {
         // Sometimes, you may really want to start normal dialogue with brackets,
         // you can prefix this with a backslash to override the parenthesis.

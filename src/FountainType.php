@@ -23,7 +23,7 @@ class FountainType
     /**
      * @dataProvider provideRoles
      */
-    public function provideRoles()
+    public function provideRoles(): array
     {
         return [
             (new Action()),

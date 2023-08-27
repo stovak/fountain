@@ -91,7 +91,8 @@ abstract class AbstractElement
     /**
      * Create the FountainElement
      */
-    public function create($text) {
+    public function create($text)
+    {
         $this->text = $this->sanitize($text);
         return $this;
     }
@@ -116,6 +117,6 @@ abstract class AbstractElement
         }
 
         $className = Str::kebab($this->getClass());
-        return "<p class='{$className}'>{$this->text}</p>";
+        return "<$className>{$this->text}</$className>";
     }
 }

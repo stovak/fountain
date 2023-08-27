@@ -8,7 +8,8 @@ class BlankLine extends AbstractElement
 {
     public const REGEX = "/^(\s{2,})$/";
 
-    public function match($line) {
+    public function match($line)
+    {
         return preg_match(self::REGEX, $line);
     }
 

@@ -18,17 +18,18 @@ class Notes extends AbstractElement
     public $parseEmphasis = true;
     public const REGEX = "/^\s*\[{2}\s*([^\]\n])+\s*\]{2}\s*$/";
 
-    public function match($line) {
-       return preg_match(self::REGEX, $line);
+    public function match($line)
+    {
+        return preg_match(self::REGEX, $line);
     }
 
-    function sanitize($line)
+    public function sanitize($line)
     {
         return trim(str_replace(array('[[', ']]'), '', $line));
     }
 
     public function __toString()
     {
-        return '<p class="notes"><em>['.$this->getText().']</em></p>';
+        return '<notes><em>['.$this->getText().']</em></notes>';
     }
 }
