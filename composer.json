@@ -3,6 +3,7 @@
     "description": "A PHP parser for Fountain, a simple markup syntax that allows screenplays to be written, edited, and shared in plain, human-readable text.",
     "type": "library",
     "license": "MIT",
+    "version": "v1.0.0",
     "keywords": ["fountain","markdown","screenplay"],
     "authors": [
         {
