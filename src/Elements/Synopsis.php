@@ -31,9 +31,4 @@ class Synopsis extends AbstractElement
         return trim($matches[1]);
     }
 
-    public function __toString()
-    {
-        // Section headings are ignored in the output
-        return '';
-    }
 }

@@ -1,25 +1,16 @@
-screenplay {
-    background: white;
-    border-radius: 4px;
-    border: 0px none !important;
-    color: black;
-    display: block;
-    font-family: Courier, fixed;
-    font-size: 12pt;
-    line-height: 14pt;
-    list-style: none;
-    padding: 5pt 14pt;
-}
-
-character { font-family: Courier, fixed; padding-top: 1.5ex; display:block;margin-top: 1em;  }
+screenplay { background: white; border-radius: 4px; border: 0px none !important;
+    color: black; display: block; font-family: Courier, fixed;
+    font-size: 12pt; line-height: 14pt; list-style: none; padding: 5pt 5pt; }
+character { font-family: Courier, fixed; padding-top: 1.5ex; display:block;margin-top: 1em; }
 action { font-family: Courier, fixed; padding-right: 5%;  display:block; margin-top: 1em; margin-bottom: 1em; }
-scene-heading { font-family: Courier, fixed; margin-bottom: 0; padding-bottom: 0; font-size: 14pt; font-weight: bolder; }
+scene-heading { font-family: Courier, fixed; margin-bottom: 0; padding-bottom: 0;
+    font-size: 14pt; font-weight: bolder; padding-top: 1em; display:block; }
 character { font-family: Courier, fixed; margin-left: 40%; line-height: 14pt;  display:block;
-            font-weight:normal; margin-bottom: 0; padding-bottom: 0; font-weight: normal; font-size: 12pt; }
+    font-weight:normal; margin-bottom: 0; padding-bottom: 0; font-weight: normal; font-size: 12pt; }
 dialogue { font-family: Courier, fixed; margin-left: 25%; padding-right: 25%; padding-bottom: 0;  display:block }
 parenthetical { font-family: Courier, fixed; margin-left: 32%; padding-right: 30%; padding-bottom: 0; margin-bottom: 0;  display:block; }
 dialogue + parenthetical { font-family: Courier, fixed; padding-bottom: 0;  display:block; }
+dialogue + scene-heading { padding-top: 1em; }
 transition { font-family: Courier, fixed; padding-top: 3ex; margin-left: 65%; padding-bottom: 1.5ex; diplay:block; }
-
 slugline { font-family: Courier, fixed; font-weight: bold; margin-bottom: 0; padding-bottom: 0;
            text-transform: uppercase; text-decoration: underline; }
