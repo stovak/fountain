@@ -22,10 +22,10 @@ class FountainTags
     /**
      * Parse the Element Collection and render the correct HTML markup for each type
      *
-     * @param $elements FountainElementCollection
+     * @param FountainElementIterator $elements
      * @return string HTML
      */
-    public function parse(FountainElementCollection $elements)
+    public function parse(FountainElementIterator $elements)
     {
         // create a new content holder
         $html = '';
@@ -34,7 +34,9 @@ class FountainTags
         $elementTypes = (new FountainType())->provideRoles();
 
         // parse each element type returned from the fountain parser
-        foreach ($elements->elements as $key => $value) {
+        for ($elements->rewind(); $elements->valid(); $elements->next()) {
+            $value = $elements->current();
+            $key = $elements->key();
             $markdown = $value;
 
             // evaluate the value type, and parse each value

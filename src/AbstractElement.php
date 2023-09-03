@@ -70,7 +70,7 @@ abstract class AbstractElement implements ElementInterface
      */
     public function is(string $type): bool
     {
-        return $type === $this->type;
+        return $this instanceof $type;
     }
 
     /**
