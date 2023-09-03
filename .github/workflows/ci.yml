@@ -25,6 +25,4 @@ jobs:
         with:
           version: 10.3
           php_version: 8.2
-          coverage: true
-          coverage_xml: coverage.xml
-          memory_limit: 1024M
+          memory_limit: 512M

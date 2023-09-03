@@ -11,6 +11,7 @@
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
+         bootstrap="vendor/autoload.php"
 >
     <testsuites>
         <testsuite name="unit">

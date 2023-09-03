@@ -37,7 +37,7 @@ class Transition extends AbstractElement implements ElementInterface
             return true;
         }
 
-        return boolval(preg_match(self::REGEX, $line));
+        return boolval(preg_match(self::REGEX, trim($line)));
     }
 
     /**
@@ -46,6 +46,6 @@ class Transition extends AbstractElement implements ElementInterface
      */
     public function sanitize(string $line): string
     {
-        return ltrim($line, '>');
+        return trim($line, ' >');
     }
 }
