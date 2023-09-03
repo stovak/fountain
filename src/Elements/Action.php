@@ -3,6 +3,7 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Action
@@ -10,20 +11,35 @@ use Fountain\AbstractElement;
  * We only mark-up Actions if they are prefixed with an exclamation point !
  *
  * WARNING: Action was the default type in Fountain, however this
- *          has been replace with Dialogue for our use case.
+ *          has been replaced with Dialogue for our use case.
  */
-class Action extends AbstractElement
+class Action extends AbstractElement implements ElementInterface
 {
-    public $parseEmphasis = true;
+    /**
+     * @var bool
+     */
+    public bool $parseEmphasis = true;
 
+    /**
+     *
+     */
     public const REGEX = "/^!/";
 
-    public function match($line)
+    /**
+     * @param $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match($line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, trim($line));
+        return boolval(preg_match(self::REGEX, trim($line)));
     }
 
-    public function sanitize($line)
+    /**
+     * @param $line
+     * @return string
+     */
+    public function sanitize($line): string
     {
         // Find and return the text of the action without !
         preg_match("/^\s*!{1}(.*)/", $line, $matches);

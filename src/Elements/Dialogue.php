@@ -3,20 +3,40 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Dialogue
  * Dialogue is any text following a Character or Parenthetical element.
  */
-class Dialogue extends AbstractElement
+class Dialogue extends AbstractElement implements ElementInterface
 {
-    public $parseEmphasis = true;
+    /**
+     * @var bool
+     */
+    public bool $parseEmphasis = true;
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null &$previousElement
+     * @return bool
+     */
+    public function match($line, ?ElementInterface &$previousElement = null): bool
     {
-        return $line;
+        if ($previousElement instanceof Character) {
+            // if it's a parenthetical, it's not dialogue
+            if (str_starts_with($line, "(")) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
+    /**
+     * @param $line
+     * @return string
+     */
     public function sanitize($line): string
     {
         // Sometimes, you may really want to start normal dialogue with brackets,

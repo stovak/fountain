@@ -3,26 +3,42 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Page Break
  * A standard HTML page break element
  */
-class PageBreak extends AbstractElement
+class PageBreak extends AbstractElement implements ElementInterface
 {
+    /**
+     *
+     */
     public const REGEX = "/^(-{3,})|(={3,})\s*$/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, $line);
+        return boolval(preg_match(self::REGEX, $line));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
         return $line;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return '<hr />';
     }

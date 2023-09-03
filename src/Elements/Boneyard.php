@@ -3,24 +3,43 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
-class Boneyard extends AbstractElement
+/**
+ *
+ */
+class Boneyard extends AbstractElement implements ElementInterface
 {
+    /**
+     *
+     */
     public const REGEX = "/(^\/\*)|(\*\/\s*$)/";
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
-        return str_replace(array('/*', '*/'), '', $line);
+        return (string) str_replace(array('/*', '*/'), '', $line);
     }
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null &$previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, $line);
+        return boolval(preg_match(self::REGEX, $line));
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         // Boneyard is ignored in the output
-        return '';
+        return sprintf('<!-- %s -->', $this->text);
     }
 }

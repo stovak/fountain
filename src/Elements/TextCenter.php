@@ -3,28 +3,42 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Centered Text
  * Allow a single line of text to be centered
  */
-class TextCenter extends AbstractElement
+class TextCenter extends AbstractElement implements ElementInterface
 {
-    public $parseEmphasis = true;
+    /**
+     * @var bool
+     */
+    public bool $parseEmphasis = true;
 
+    /**
+     *
+     */
     public const REGEX = "/^(\s+)?(>.*<)$/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, trim($line));
+        return boolval(preg_match(self::REGEX, trim($line)));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
         // Find and return the text of the lyrics without > symbols <
-        $line = trim($line);
-        $text = substr($line, 1);               // (remove >)
-        $text = substr($text, 0, -1);   // (remove <)
-        return $text;
+        return trim($line, ' <>');
+
     }
 }

@@ -3,6 +3,7 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Synopses
@@ -13,22 +14,40 @@ use Fountain\AbstractElement;
  * Although this element may appear at any position in the text, we shall
  * mark up this text different if it appears at the beginning of a file.
  */
-class Synopsis extends AbstractElement
+class Synopsis extends AbstractElement implements ElementInterface
 {
-    public $parseEmphasis = true;
-    public $first;
+    /**
+     * @var bool
+     */
+    public bool $parseEmphasis = true;
+    /**
+     * @var bool
+     */
+    public bool $first;
 
+    /**
+     *
+     */
     public const REGEX = "/^=\s/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null &$previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, trim($line));
+        return boolval(preg_match(self::REGEX, trim($line)));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
         preg_match("/^\s*={1}(.*)/", $line, $matches);
-        return trim($matches[1]);
+        return isset($matches[1]) ? trim($matches[1]) : '';
     }
 
 }

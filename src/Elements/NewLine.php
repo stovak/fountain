@@ -3,26 +3,45 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
-class NewLine extends AbstractElement
+/**
+ *
+ */
+class NewLine extends AbstractElement implements ElementInterface
 {
+    /**
+     *
+     */
     public const REGEX = "/^\s*$/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        if ($line === "") {
+        if (trim($line) === "") {
             return true;
         }
-        return preg_match(self::REGEX, $line);
+        return boolval(preg_match(self::REGEX, $line));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
-        return $line;
+        return PHP_EOL;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        return '';
+        return PHP_EOL;
     }
 }

@@ -3,6 +3,7 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Notes
@@ -13,22 +14,40 @@ use Fountain\AbstractElement;
  * or provide suggestions for translations that may not be 100% correct.
  * These will not be show on the website.
  */
-class Notes extends AbstractElement
+class Notes extends AbstractElement implements ElementInterface
 {
-    public $parseEmphasis = true;
+    /**
+     * @var bool
+     */
+    public bool $parseEmphasis = true;
+    /**
+     *
+     */
     public const REGEX = "/^\s*\[{2}\s*([^\]\n])+\s*\]{2}\s*$/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, $line);
+        return boolval(preg_match(self::REGEX, $line));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
-        return trim(str_replace(array('[[', ']]'), '', $line));
+        return trim((string)str_replace(array('[[', ']]'), '', $line));
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return '<notes><em>['.$this->getText().']</em></notes>';
     }

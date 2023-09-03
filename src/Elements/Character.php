@@ -3,41 +3,57 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Characters
  * Match CHARACTERS or any line starting with @
  * Allow indents and whitespace in the beginning
  */
-class Character extends AbstractElement
+class Character extends AbstractElement implements ElementInterface
 {
-    public $dual_dialog = false;
+    /**
+     * @var bool
+     */
+    public bool $dual_dialog = false;
 
+    /**
+     *
+     */
     public const REGEX = "/^((\s*)[A-Z@]((([^a-z`]+)(\s?\(.*\))?))|(@.+))$/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, $line);
+        return boolval(preg_match(self::REGEX, $line));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
         // (remove @ prefix)
-        $line = ltrim($line, '@');
+        $line = trim($line, ' @');
         // remove parenthesis, this is added separately in the parser
-        $line = preg_replace("/\(.*\)/i", "", $line);
         // response
-        return $line;
+        return preg_replace("/\(.*\)/i", "", $line);
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        $character = $this->getText();
-
-        if (isset($this->dual_dialog) && $this->dual_dialog === true) {
-            $character .= " (DUAL)";
-        }
-
-        return "<character>{$character}</character>";
+        return sprintf(
+            "<character %s>%s</character>",
+            ($this->dual_dialog === true) ? 'dual="true"' : '',
+            $this->getText()
+        );
     }
 }

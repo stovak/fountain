@@ -3,29 +3,52 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
-class SectionHeading extends AbstractElement
+/**
+ *
+ */
+class SectionHeading extends AbstractElement implements ElementInterface
 {
+    /**
+     * @var int
+     */
     public $depth = 1;
 
+    /**
+     *
+     */
     public const REGEX = "/^(#{1,})\s(.*)/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, trim($line));
+        return boolval(preg_match(self::REGEX, trim($line)));
     }
 
-    public function depth($line)
+    /**
+     * @param string $line
+     * @return int
+     */
+    public function depth(string $line): int
     {
         // find the number of # (##, ###, etc.) and the text
         preg_match("/^(#+)\s*(.*)/", $line, $matches);
-        list($raw, $depth, $text) = $matches;
+        list(, $depth, ) = $matches;
 
         // convert depth to a number and compact into array
         return strlen($depth);
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
         // find the number of # (##, ###, etc.) and the text
         preg_match("/^(#+)\s*(.*)/", $line, $matches);
@@ -53,15 +76,18 @@ class SectionHeading extends AbstractElement
      * @param $text
      * @return string
      */
-    public function getHeadingDepth($text)
+    public function getHeadingWithDepth(string $text): string
     {
-        return sprintf('<scene-heading data-depth="%d">%s</scene-heading>', $this->depth ?? 0, $text);
+        return sprintf('<section-heading data-depth="%d">%s</section-heading>', $this->depth, $text);
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         // Section headings are ignored in the output
         // $heading = $this->getHeadingDepth($this->getText());
-        return '';
+        return sprintf('<section-heading>%s</section-heading>', $this->getText());
     }
 }

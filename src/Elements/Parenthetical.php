@@ -3,6 +3,7 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 
 /**
  * Parenthetical
@@ -11,16 +12,28 @@ use Fountain\AbstractElement;
  * These are useful to describe what is happening behind the scenes,
  * for example: (Cough.) (Inaudible) (Tape ends.)
  */
-class Parenthetical extends AbstractElement
+class Parenthetical extends AbstractElement implements ElementInterface
 {
+    /**
+     *
+     */
     public const REGEX = "/^\s*\(/";
 
-    public function match($line)
+    /**
+     * @param string $line
+     * @param ElementInterface|null $previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
     {
-        return preg_match(self::REGEX, trim($line));
+        return boolval(preg_match(self::REGEX, trim($line)));
     }
 
-    public function sanitize($line)
+    /**
+     * @param string $line
+     * @return string
+     */
+    public function sanitize(string $line): string
     {
         return trim($line);
     }

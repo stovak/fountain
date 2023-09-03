@@ -13,14 +13,14 @@ namespace Fountain;
  */
 class FountainElementCollection
 {
-    public $elements;
-    public $types;
+    public array $elements;
+    public array $types;
 
     /**
      * Add and index the element
      * @param  AbstractElement  $element
      */
-    public function add_element($element)
+    public function addElement(ElementInterface $element): void
     {
         // add to the element array
         $this->elements[] = $element;
@@ -33,7 +33,7 @@ class FountainElementCollection
      * Convenience function for creating and adding a FountainElement
      * @param $element AbstractElement Character, Dialogue, etc
      */
-    public function create_and_add_element($element)
+    public function createAndAddElement($element): void
     {
         // add to the collection
         $this->add_element($element);
@@ -44,7 +44,7 @@ class FountainElementCollection
      * @param  string  $type  type of element
      * @return mixed    FountainElement or FALSE
      */
-    public function &find_last_element_of_type($type)
+    public function &findLastElementOfType(string $type): ?ElementInterface
     {
         $response = false;
 
@@ -64,9 +64,9 @@ class FountainElementCollection
 
     /**
      * Find the last element
-     * @return mixed    FountainElement or FALSE
+     * @return ElementInterface
      */
-    public function &last_element()
+    public function &lastElement(): ?ElementInterface
     {
         $response = false;
 

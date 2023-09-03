@@ -5,13 +5,14 @@
 namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
+use Fountain\ElementInterface;
 use Fountain\Illuminate\Str;
 
 /**
  * Scene Heading
  * A Scene Heading is any line that has a blank line following it.
  */
-class SceneHeading extends AbstractElement
+class SceneHeading extends AbstractElement implements ElementInterface
 {
     /**
      *
@@ -21,7 +22,7 @@ class SceneHeading extends AbstractElement
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $text = $this->getText();
         $className = Str::kebab($this->getClass());
@@ -32,42 +33,42 @@ class SceneHeading extends AbstractElement
             $line = preg_replace('/#.*#/i', '', $text);
             $anchor = preg_replace('/#/i', '', $numbering[0]);
 
-            return '<scene-heading class="'.$className.'" id="'.$anchor.'">'.$line.'</scene-heading>';
+            return '<scene-heading class="' . $className . '" id="' . $anchor . '">' . $line . '</scene-heading>';
         }
 
-        return '<scene-heading class="'.$className.'">'.trim($text).'</scene-heading>';
+        return '<scene-heading class="' . $className . '">' . trim($text) . '</scene-heading>';
     }
 
     /**
-     * @param $line
-     * @return false|int
-     */
-    public function forcedHeading($line): false|int
-    {
-        return preg_match('/^\\.[^.]/', $line);
-    }
-
-    /**
-     * @param $line
+     * @param string $line
      * @return bool
      */
-    public function match($line): bool
+    public function forcedHeading(string $line): bool
     {
-        $forced_scene_heading = $this->forcedHeading($line);
+        return boolval(preg_match('/^\\.[^.]/', $line));
+    }
+
+    /**
+     * @param string $line
+     * @param ElementInterface|null &$previousElement
+     * @return bool
+     */
+    public function match(string $line, ?ElementInterface &$previousElement = null): bool
+    {
 
         // strict headings allow all scene_headings
         // causes a conflict in french where sentences start with "Est-ce que c"
         // to fix this: prefix sentences with an exclamation point `!`
         $scene_heading = preg_match(self::REGEX, $line, $scene_heading_matches);
 
-        return $forced_scene_heading || $scene_heading;
+        return $this->forcedHeading($line) || boolval($scene_heading);
     }
 
     /**
-     * @param $line
+     * @param string $line
      * @return string
      */
-    public function sanitize($line): string
+    public function sanitize(string $line): string
     {
         // remove the prefix
         if ($this->forcedHeading($line)) {
