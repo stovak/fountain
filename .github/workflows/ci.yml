@@ -1,0 +1,30 @@
+name: Fountain CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: install dependencies
+        uses: php-actions/composer@v6
+        with:
+          php_version: 8.2
+          composer_options: --prefer-dist --no-progress --no-suggest --optimize-autoloader --no-interaction
+
+      - name: Run Tests
+        uses: php-actions/phpunit@v3
+        with:
+          version: 10.3
+          php_version: 8.2
+          coverage: true
+          coverage_xml: coverage.xml
+          memory_limit: 1024M

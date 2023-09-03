@@ -51,7 +51,7 @@ class SectionHeading extends AbstractElement implements ElementInterface
     public function sanitize(string $line): string
     {
         // find the number of # (##, ###, etc.) and the text
-        preg_match("/^(#+)\s*(.*)/", $line, $matches);
+        preg_match("/^(#+)\s*(.*)/", trim($line, ' '), $matches);
         list($raw, $depth, $text) = $matches;
 
         // calculate heading depth

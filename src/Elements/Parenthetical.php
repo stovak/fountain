@@ -35,6 +35,6 @@ class Parenthetical extends AbstractElement implements ElementInterface
      */
     public function sanitize(string $line): string
     {
-        return trim($line);
+        return trim($line, " ()");
     }
 }
