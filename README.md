@@ -6,8 +6,6 @@ Fountain is a simple markup syntax that allows screenplays to be written, edited
 
 For more details on Fountain see http://fountain.io.
 
-A demo is available on [heroku](https://fountain-livewire.herokuapp.com) for testing.
-
 ## Getting started
 
 The simple version for parsing a screenplay text straight into HTML:
@@ -27,6 +25,31 @@ Once the Fountain Elements have been parsed, the FountainTags class determines t
     $fountainElements = (new \Fountain\FountainParser())->parse($input);
     // parse fountain elements into html
     $html = (new \Fountain\FountainTags())->parse($fountainElements);
+```
+
+## Listening for render events
+
+It is possible to listen for render events. This is useful if you want to do something with the HTML before it is returned.
+
+```php
+$eventDispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
+$eventDispatcher->addListener('fountain.render', function (\Fountain\Event\RenderEvent $event) {
+    $event->setHtml(str_replace('horse', 'cat', $event->getHtml()));
+});
+// Create a new screenplay programmatically...
+$it = new \Fountain\Screenplay($eventDispatcher);
+$it->elements()->addElement(new NewLine());
+$it->elements()->addElement($headExpected);
+$it->elements()->addElement(new Action());
+$it->elements()->last()->setText("John goes to see a man about a horse.");
+$it->elements()->addElement(new Character());
+$it->elements()->last()->setText("JOHN");
+$it->elements()->addElement(new Parenthetical());
+$it->elements()->last()->setText("(to himself)");
+$it->elements()->addElement(new Dialogue());
+$it->elements()->last()->setText("I wonder if he has any horses for sale.");
+// Print that screenplay...
+echo (string)$it;
 ```
 
 ## Mentions

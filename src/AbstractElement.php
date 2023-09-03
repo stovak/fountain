@@ -26,10 +26,7 @@ abstract class AbstractElement implements ElementInterface
      */
     protected string $type;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected EventDispatcherInterface $eventDispatcher;
+
 
 
     /**

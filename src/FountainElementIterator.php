@@ -4,6 +4,7 @@ namespace Fountain;
 
 use Fountain\Elements\NewLine;
 use Hoa\Iterator\Recursive\Iterator;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * FountainElement
