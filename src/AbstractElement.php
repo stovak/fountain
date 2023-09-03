@@ -132,6 +132,7 @@ abstract class AbstractElement implements ElementInterface
         }
 
         $className = Str::kebab($this->getClass());
+        $this->eventDispatcher->dispatch(new Events\RenderEvent($this));
         return "<$className>{$this->text}</$className>";
     }
 }

@@ -4,6 +4,7 @@ namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
 use Fountain\ElementInterface;
+use Fountain\Events\RenderEvent;
 
 /**
  *
@@ -86,8 +87,7 @@ class SectionHeading extends AbstractElement implements ElementInterface
      */
     public function __toString(): string
     {
-        // Section headings are ignored in the output
-        // $heading = $this->getHeadingDepth($this->getText());
+        $this->eventDispatcher->dispatch(new RenderEvent($this));
         return sprintf('<section-heading>%s</section-heading>', $this->getText());
     }
 }

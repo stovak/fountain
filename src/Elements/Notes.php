@@ -4,6 +4,7 @@ namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
 use Fountain\ElementInterface;
+use Fountain\Events\RenderEvent;
 
 /**
  * Notes
@@ -49,6 +50,7 @@ class Notes extends AbstractElement implements ElementInterface
      */
     public function __toString(): string
     {
+        $this->eventDispatcher->dispatch(new RenderEvent($this));
         return '<notes><em>['.$this->getText().']</em></notes>';
     }
 }

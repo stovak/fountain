@@ -4,6 +4,7 @@ namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
 use Fountain\ElementInterface;
+use Fountain\Events\RenderEvent;
 
 /**
  *
@@ -39,6 +40,7 @@ class BlankLine extends AbstractElement implements ElementInterface
      */
     public function __toString(): string
     {
+        $this->eventDispatcher->dispatch(new RenderEvent($this));
         return PHP_EOL;
     }
 }

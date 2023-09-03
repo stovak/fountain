@@ -1,6 +1,6 @@
 {
     "name": "stovak/fountain",
-    "description": "A PHP parser for Fountain, a simple markup syntax that allows screenplays to be written, edited, and shared in plain, human-readable text.",
+    "description": "A rewrite of Tao's PHP Parser for Fountain using php 8.2, type safety, unit testing and rendering events. The library renders using styled pseudo elements, e.g. '<screenplay />'",
     "type": "library",
     "license": "MIT",
     "version": "v1.0.0",

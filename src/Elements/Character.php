@@ -4,6 +4,7 @@ namespace Fountain\Elements;
 
 use Fountain\AbstractElement;
 use Fountain\ElementInterface;
+use Fountain\Events\RenderEvent;
 
 /**
  * Characters
@@ -50,6 +51,7 @@ class Character extends AbstractElement implements ElementInterface
      */
     public function __toString(): string
     {
+        $this->eventDispatcher->dispatch(new RenderEvent($this));
         return sprintf(
             "<character %s>%s</character>",
             ($this->dual_dialog === true) ? 'dual="true"' : '',

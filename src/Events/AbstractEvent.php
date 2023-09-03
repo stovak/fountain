@@ -9,7 +9,7 @@ abstract class AbstractEvent extends Event
 {
     protected ElementInterface $element;
 
-    public function __construct(ElementInterface $element)
+    public function __construct(ElementInterface &$element)
     {
         $this->element = $element;
     }
