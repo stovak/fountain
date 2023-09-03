@@ -1,5 +1,7 @@
 # Fountain Parser
 
+[![Fountain CI](https://github.com/stovak/fountain/actions/workflows/ci.yml/badge.svg)](https://github.com/stovak/fountain/actions/workflows/ci.yml)
+
 Fountain is a simple markup syntax that allows screenplays to be written, edited, and shared in plain, human-readable text. Fountain allows you to work on your screenplay anywhere, on any computer, using any software that edits text files.
 
 For more details on Fountain see http://fountain.io.
@@ -30,5 +32,6 @@ Once the Fountain Elements have been parsed, the FountainTags class determines t
 ## Mentions
 The code has been built upon the previous work of these contributors.
 
+ * [Daniel Sheilds](https://github.com/tao/fountain)
  * [Alex King (PHP port)](https://github.com/alexking/Fountain-PHP)
  * [Yousefi & John August (original Objective-C version)](https://github.com/nyousefi/Fountain)
