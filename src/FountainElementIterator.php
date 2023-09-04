@@ -3,8 +3,8 @@
 namespace Fountain;
 
 use Fountain\Elements\NewLine;
-use Hoa\Iterator\Recursive\Iterator;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerTrait;
 
 /**
  * FountainElement
@@ -16,8 +16,10 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  * @author Alex King (PHP port)
  * @author Nima Yousefi & John August (original Objective-C version)
  */
-class FountainElementIterator implements \Countable, \Iterator
+class FountainElementIterator implements \Countable, \Iterator, \Psr\Log\LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+    use LoggerTrait;
     /**
      * @var int
      */
@@ -25,21 +27,25 @@ class FountainElementIterator implements \Countable, \Iterator
     /**
      * @var array<ElementInterface>
      */
-    protected array $elements;
+    protected array $elements = [];
     /**
      * @var array<string>
      */
-    protected array $types;
+    protected array $types = [];
 
     /**
      * Add and index the element
      * @param  ElementInterface  $element
      */
-    public function addElement(ElementInterface $element): void
+    public function addElement(?ElementInterface $element = null): void
     {
-        // add to the element array
-        $this->elements[] = $element;
-
+        if (!$element instanceof ElementInterface) {
+            return;
+        }
+        if ($element->is(NewLine::class) && $this->lastElementIsNewline()) {
+            return;
+        }
+        $this->elements = array_merge(array_filter($this->elements), [$element]);
         // add to the types array for quick searching
         $this->types[] = $element->getType();
     }
@@ -82,7 +88,9 @@ class FountainElementIterator implements \Countable, \Iterator
         $toReturn = "";
 
         for ($this->rewind(); $this->valid(); $this->next()) {
-            $toReturn .= (string) $this->current() . PHP_EOL;
+            if ($this->current() instanceof ElementInterface) {
+                $toReturn .= (string) $this->current();
+            }
         }
 
         return "<screenplay>" . $toReturn . "</screenplay>";
@@ -152,6 +160,11 @@ class FountainElementIterator implements \Countable, \Iterator
      */
     public function lastElementIsNewline(): bool
     {
-        return $this->last()->is(NewLine::class);
+        return $this->last()?->is(NewLine::class) ?? false;
+    }
+
+    public function log($level, \Stringable|string $message, array $context = []): void
+    {
+        // TODO: Implement log() method.
     }
 }

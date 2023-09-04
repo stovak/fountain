@@ -3,7 +3,7 @@
     "description": "A rewrite of Tao's PHP Parser for Fountain using php 8.2, type safety, unit testing and rendering events. The library renders using styled pseudo elements, e.g. '<screenplay />'",
     "type": "library",
     "license": "MIT",
-    "version": "v2.0.0-dev0",
+    "version": "v2.0.0",
     "keywords": ["fountain","markdown","screenplay"],
     "authors": [
         {
@@ -27,7 +27,9 @@
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
-        "symfony/event-dispatcher": "^6.3"
+        "symfony/event-dispatcher": "^6.3",
+        "psr/log": "^3.0",
+        "monolog/monolog": "^3.4"
     },
     "autoload": {
         "psr-4": {

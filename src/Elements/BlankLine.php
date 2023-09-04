@@ -41,6 +41,6 @@ class BlankLine extends AbstractElement implements ElementInterface
     public function __toString(): string
     {
         $this->eventDispatcher->dispatch(new RenderEvent($this));
-        return PHP_EOL;
+        return '';
     }
 }

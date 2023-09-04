@@ -26,7 +26,7 @@ class NewLine extends AbstractElement implements ElementInterface
         if (trim($line) === "") {
             return true;
         }
-        return boolval(preg_match(self::REGEX, $line));
+        return boolval(preg_match(self::REGEX, trim($line, ' ')));
     }
 
     /**
@@ -35,7 +35,7 @@ class NewLine extends AbstractElement implements ElementInterface
      */
     public function sanitize(string $line): string
     {
-        return PHP_EOL;
+        return '';
     }
 
     /**
