@@ -35,6 +35,9 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class FountainParser
 {
+    /**
+     * @var Logger
+     */
     protected Logger $logger;
     /**
      * Element Collection.
@@ -55,20 +58,14 @@ class FountainParser
      */
     public function __construct(?EventDispatcherInterface $dispatcher = null, ?logger $logger = null)
     {
-        if ($dispatcher != null) {
-            $this->dispatcher = $dispatcher;
-        }
-        if ($dispatcher == null) {
-            // if it's null, make your own local version
-            $this->dispatcher = new EventDispatcher();
-        }
+        $this->dispatcher = $dispatcher ?? new EventDispatcher();
         $this->_elements = new FountainElementIterator();
+        $this->logger = $logger ??  new Logger(__CLASS__);
         if ($logger != null) {
             $this->logger = $logger;
         }
         if ($logger == null) {
             // if it's null, make your own local version
-            $this->logger =  new Logger(__CLASS__);
             $this->logger->pushHandler(new StreamHandler('parse-log.log', Level::Debug));
         }
     }
@@ -156,7 +153,7 @@ class FountainParser
             // check for a blank line
             if ($assertNewLine) {
                 $this->logger->debug("New line found");
-                $this->elements()->addElement(new NewLine());
+                $this->elements()->addElement(new NewLine($this->dispatcher));
                 continue;                   // no further processing needed
             }
 
@@ -173,7 +170,7 @@ class FountainParser
 
             if ($assertSynopsis) {
                 $this->logger->debug("Synopsis found");
-                $synopsis = (new Synopsis())->create($line);
+                $synopsis = (new Synopsis($this->dispatcher))->create($line);
                 $synopsis->first = ($first_line);
                 $this->elements()->addElement($synopsis);
 
@@ -196,7 +193,7 @@ class FountainParser
                 // if the comment ends on this line
                 if ($boneyard && $comment_block) {
                     $comment_text = (new Boneyard())->sanitize($line);
-                    $boneyard_element = (new Boneyard())->create($comment_text);
+                    $boneyard_element = (new Boneyard($this->dispatcher))->create($comment_text);
                     $this->elements()->addElement($boneyard_element);
                     $comment_block = false;
                     $comment_text = ''; // reset the text
@@ -225,7 +222,7 @@ class FountainParser
             if ((new PageBreak())->match($line)) {
                 $this->logger->debug("Page break found");
                 // add a page break element
-                $this->elements()->addElement(new PageBreak());
+                $this->elements()->addElement(new PageBreak($this->dispatcher));
 
                 continue;                   // no further processing needed
             }
@@ -241,7 +238,7 @@ class FountainParser
 
             if ($assertLyrics) {
                 $this->logger->debug("Lyrics found");
-                $lyrics = (new Lyrics())->create($line);
+                $lyrics = (new Lyrics($this->dispatcher))->create($line);
                 $this->elements()->addElement($lyrics);
 
                 continue;                   // no further processing needed
@@ -257,7 +254,7 @@ class FountainParser
 
             if ((new Action())->match($line)) {
                 $this->logger->debug("Action found");
-                $action = (new Action())->create($line);
+                $action = (new Action($this->dispatcher))->create($line);
                 $this->elements()->addElement($action);
 
                 continue;                   // no further processing needed
@@ -271,9 +268,9 @@ class FountainParser
 
             if ($this->elements()->lastElementIsNewline() && (new Notes())->match($line)) {
                 $this->logger->debug("Notes found");
-                $notes = (new Notes())->create($line);
+                $notes = (new Notes($this->dispatcher))->create($line);
                 $this->elements()->addElement($notes);
-                $this->elements()->addElement(new NewLine());
+                $this->elements()->addElement(new NewLine($this->dispatcher));
 
                 continue;                   // no further processing needed
             }
@@ -290,9 +287,9 @@ class FountainParser
             if ($assertSection) {
                 $this->logger->debug("Section found");
                 // add a section heading
-                $sectionHeading = (new SectionHeading())->create($line);
+                $sectionHeading = (new SectionHeading($this->dispatcher))->create($line);
                 $this->elements()->addElement($sectionHeading);
-                $this->elements()->addElement(new NewLine());
+                $this->elements()->addElement(new NewLine($this->dispatcher));
 
                 continue;                   // no further processing needed
             }
@@ -305,9 +302,9 @@ class FountainParser
 
             if ((new SceneHeading())->match($line)) {
                 $this->logger->debug("Scene heading found");
-                $scene = (new SceneHeading())->create($line);
+                $scene = (new SceneHeading($this->dispatcher))->create($line);
                 $this->elements()->addElement($scene);
-                $this->elements()->addElement(new NewLine());
+                $this->elements()->addElement(new NewLine($this->dispatcher));
 
                 continue;                   // no further processing needed
             }
@@ -321,7 +318,7 @@ class FountainParser
 
             if ((new TextCenter())->match($line)) {
                 $this->logger->debug("Centered text found");
-                $text = (new TextCenter())->create($line);
+                $text = (new TextCenter($this->dispatcher))->create($line);
 
                 // check if the previous element was centered
                 if ($this->elements()->last() && $this->elements()->last()->is(TextCenter::class)) {
@@ -343,7 +340,7 @@ class FountainParser
 
             if ((new Transition())->match($line)) {
                 $this->logger->debug("Transition found");
-                $text = (new Transition())->create($line);
+                $text = (new Transition($this->dispatcher))->create($line);
                 $this->elements()->addElement($text);
 
                 continue;                   // no further processing needed
@@ -385,13 +382,13 @@ class FountainParser
 
                     // add a character element
                     $line = (new DualDialogue())->sanitize($line);
-                    $character = (new Character())->create($line);
+                    $character = (new Character($this->dispatcher))->create($line);
                     $character->dual_dialog = $dual_dialog;
                     $this->elements()->addElement($character);
 
                     // Check if the Character contains inline parenthesis
                     if (preg_match('/\\(.*\\)/', $line, $matches)) {
-                        $parenthesis = (new Parenthetical())->create($matches[0]);
+                        $parenthesis = (new Parenthetical($this->dispatcher))->create($matches[0]);
                         $this->elements()->addElement($parenthesis);
                     }
 
@@ -412,7 +409,7 @@ class FountainParser
             if ($assertParenthetical) {
                 $this->logger->debug("Parenthetical found");
                 // add a parenthetical element
-                $parenthesis = (new Parenthetical())->create($line);
+                $parenthesis = (new Parenthetical($this->dispatcher))->create($line);
                 $this->elements()->addElement($parenthesis);
 
                 continue;
@@ -479,7 +476,7 @@ class FountainParser
             // If there are newlines previously
             if ($this->elements()->lastElementIsNewline()) {
                 // return action as the default element
-                $action = (new Action())->create($line);
+                $action = (new Action($this->dispatcher))->create($line);
                 $this->elements()->addElement($action);
 
                 continue;                   // no further processing needed
@@ -495,6 +492,16 @@ class FountainParser
     public function elements(): FountainElementIterator
     {
         return $this->_elements;
+    }
+
+    /**
+     * @param string $string
+     * @param array|\Closure $param
+     * @return void
+     */
+    public function on(string $string, array|\Callable $param)
+    {
+        $this->dispatcher->addListener($string, $param);
     }
 
 }

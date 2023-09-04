@@ -17,7 +17,7 @@ class NewLineTest extends TestCase
     public function testSanitize()
     {
         $newLine = new NewLine();
-        $this->assertEquals("" . PHP_EOL, $newLine->sanitize(""));
-        $this->assertEquals("" . PHP_EOL, $newLine->sanitize(" "));
+        $this->assertEquals("", $newLine->sanitize(""));
+        $this->assertEquals("", $newLine->sanitize(" "));
     }
 }

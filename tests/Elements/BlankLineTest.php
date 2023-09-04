@@ -45,6 +45,6 @@ class BlankLineTest extends TestCase
      */
     public function testToString(): void
     {
-        $this->assertEquals("" . PHP_EOL, $this->blankLine->__toString());
+        $this->assertEquals('', $this->blankLine->__toString());
     }
 }

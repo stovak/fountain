@@ -12,10 +12,13 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 abstract class AbstractElement implements ElementInterface
 {
     /**
+     * @var EventDispatcherInterface
+     */
+    protected EventDispatcherInterface $eventDispatcher;
+    /**
      * @var bool
      */
     public bool $parseEmphasis = false;
-
     /**
      * @var string text value
      */

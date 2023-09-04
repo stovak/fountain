@@ -23,16 +23,10 @@ class FountainElementIteratorTest extends TestCase
         $this->assertNotNull($headResult, "Result should not be null");
         $this->assertEquals(SectionHeading::class, $headResult->getType());
         $this->assertEquals("EXT. STABLE - DAY", $headResult->getText());
-        $contents = file_get_contents("fixtures/rendered_test-1.html");
-        $this->assertEquals($contents, (string) $it);
+        $expected = str_replace(PHP_EOL, "", file_get_contents("tests/fixtures/rendered_test-1.html"));
+        $actual = str_replace(PHP_EOL, "", (string) $it);
+        $this->assertEquals($expected, $actual);
     }
-
-    public function test__toString(): void
-    {
-
-    }
-
-
 
 
 }

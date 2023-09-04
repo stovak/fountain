@@ -5,3 +5,4 @@ reports/*
 /.phpunit.result.cache
 /.phpunit.cache
 /tests/parse-log.log
+/parse-log.log
