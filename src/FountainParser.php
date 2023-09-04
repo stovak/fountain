@@ -64,10 +64,6 @@ class FountainParser
         if ($logger != null) {
             $this->logger = $logger;
         }
-        if ($logger == null) {
-            // if it's null, make your own local version
-            $this->logger->pushHandler(new StreamHandler('parse-log.log', Level::Debug));
-        }
     }
 
 

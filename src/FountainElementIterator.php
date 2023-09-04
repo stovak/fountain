@@ -3,8 +3,12 @@
 namespace Fountain;
 
 use Fountain\Elements\NewLine;
+use Fountain\Events\AddElementEvent;
+use Fountain\Events\AddEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
+use Psr\Log\NullLogger;
 
 /**
  * FountainElement
@@ -20,6 +24,9 @@ class FountainElementIterator implements \Countable, \Iterator, \Psr\Log\LoggerA
 {
     use LoggerAwareTrait;
     use LoggerTrait;
+
+    protected EventDispatcherInterface $eventDispatcher;
+
     /**
      * @var int
      */
@@ -32,6 +39,12 @@ class FountainElementIterator implements \Countable, \Iterator, \Psr\Log\LoggerA
      * @var array<string>
      */
     protected array $types = [];
+
+    public function __construct(?EventDispatcherInterface $eventDispatcher = null)
+    {
+        $this->logger = new NullLogger();
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     /**
      * Add and index the element
@@ -46,6 +59,7 @@ class FountainElementIterator implements \Countable, \Iterator, \Psr\Log\LoggerA
             return;
         }
         $this->elements = array_merge(array_filter($this->elements), [$element]);
+        $this->eventDispatcher->dispatch(new AddElementEvent($this->last()));
         // add to the types array for quick searching
         $this->types[] = $element->getType();
     }
