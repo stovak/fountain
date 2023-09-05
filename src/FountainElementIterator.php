@@ -9,6 +9,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
 use Psr\Log\NullLogger;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * FountainElement
@@ -43,6 +44,9 @@ class FountainElementIterator implements \Countable, \Iterator, \Psr\Log\LoggerA
     public function __construct(?EventDispatcherInterface $eventDispatcher = null)
     {
         $this->logger = new NullLogger();
+        if ($eventDispatcher === null) {
+            $eventDispatcher = new EventDispatcher();
+        }
         $this->eventDispatcher = $eventDispatcher;
     }
 
