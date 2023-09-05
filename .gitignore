@@ -6,3 +6,4 @@ reports/*
 /.phpunit.cache
 /tests/parse-log.log
 /parse-log.log
+/composer.lock

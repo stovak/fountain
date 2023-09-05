@@ -3,7 +3,7 @@
     "description": "A rewrite of Tao's PHP Parser for Fountain using php 8.2, type safety, unit testing and rendering events. The library renders using styled pseudo elements, e.g. '<screenplay />'",
     "type": "library",
     "license": "MIT",
-    "version": "2.0.0-beta1",
+    "version": "2.0.0",
     "keywords": ["fountain","markdown","screenplay"],
     "authors": [
         {
@@ -46,8 +46,7 @@
         "friendsofphp/php-cs-fixer": "^3.23",
         "phpunit/phpunit": "^10.3",
         "phpstan/phpstan": "^1.10",
-        "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan-beberlei-assert": "^1.1"
+        "phpstan/extension-installer": "^1.3"
     },
     "scripts": {
         "code:stan": [
